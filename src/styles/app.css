@@ -435,6 +435,23 @@ a {
   --thread: var(--t-sc);
 }
 
+/* Slug penuh (dipakai layar Koneksi yang terkoneksi backend) */
+[data-provider='spotify'] {
+  --thread: var(--t-sp);
+}
+[data-provider='apple'] {
+  --thread: var(--t-am);
+}
+[data-provider='tidal'] {
+  --thread: var(--t-td);
+}
+[data-provider='youtube'] {
+  --thread: var(--t-yt);
+}
+[data-provider='soundcloud'] {
+  --thread: var(--t-sc);
+}
+
 .thread {
   width: 3px;
   align-self: stretch;

@@ -65,6 +65,8 @@ Backend Unison live di project Supabase **`unison`** (ref `cliujpbiecvbskxiyxny`
 - **Fungsi pembungkus service-role-only** (`0002_private_access_functions.sql`): `unison_oauth_insert_state`, `unison_oauth_consume_state`, `unison_provider_upsert`, `unison_provider_status`, `unison_provider_disconnect`. Terverifikasi `anon_exec=false, auth_exec=false, svc_exec=true` — hanya service_role yang bisa memanggil.
 - **Token terenkripsi AES-256-GCM** (`supabase/functions/_shared/crypto.ts`): kunci `TOKEN_ENCRYPTION_KEY` hanya di secret Edge Function; ciphertext di `private.provider_accounts.token_ciphertext`, tidak pernah ke klien.
 - **Empat Edge Function** (ter-deploy, terverifikasi lewat HTTP): `oauth-authorize` (401 tanpa JWT), `oauth-callback` (302 redirect), `provider-status` (401 tanpa JWT), `apple-developer-token` (401 tanpa JWT; 503 jujur bila kunci Apple belum diisi).
+- **Satu Edge Function tambahan**: `provider-disconnect` — memutuskan layanan (menghapus token) per user.
+- **Layar Koneksi tersambung ke backend** (`src/views/ConnectionsView.tsx`): saat masuk, menampilkan status koneksi asli (`provider-status`), tombol Hubungkan memicu alur OAuth (`oauth-authorize` → redirect provider → `oauth-callback`), dan Putuskan memanggil `provider-disconnect`. Saat belum masuk, menampilkan ajakan "Masuk untuk menghubungkan layanan musikmu."
 
 ### Alur OAuth 2.1 PKCE
 

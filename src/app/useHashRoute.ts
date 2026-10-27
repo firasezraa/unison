@@ -11,7 +11,8 @@ export type Route =
 
 function parse(hash: string): Route {
   const clean = hash.replace(/^#\/?/, '')
-  const [head, tail] = clean.split('/')
+  const [pathPart] = clean.split('?')
+  const [head, tail] = pathPart.split('/')
   switch (head) {
     case '':
       return { name: 'beranda' }
