@@ -435,6 +435,23 @@ a {
   --thread: var(--t-sc);
 }
 
+/* Slug penuh (dipakai layar Koneksi yang terkoneksi backend) */
+[data-provider='spotify'] {
+  --thread: var(--t-sp);
+}
+[data-provider='apple'] {
+  --thread: var(--t-am);
+}
+[data-provider='tidal'] {
+  --thread: var(--t-td);
+}
+[data-provider='youtube'] {
+  --thread: var(--t-yt);
+}
+[data-provider='soundcloud'] {
+  --thread: var(--t-sc);
+}
+
 .thread {
   width: 3px;
   align-self: stretch;
@@ -1751,4 +1768,129 @@ kbd {
   .thread-progress__fill {
     background: Highlight;
   }
+}
+
+/* ============ Masuk / daftar ============ */
+
+.auth-view {
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--s-6);
+  background: var(--bg);
+}
+
+.auth-card {
+  width: min(420px, 100%);
+  padding: var(--s-8);
+  border-radius: var(--r-dialog);
+  background: var(--surface-1);
+  border: 1px solid color-mix(in srgb, var(--ink) 10%, transparent);
+}
+
+.auth-card__title {
+  font-size: 28px;
+  line-height: 34px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.auth-card__lede {
+  margin-top: var(--s-2);
+  color: var(--ink-muted);
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.field {
+  margin-top: var(--s-4);
+}
+
+.field label {
+  display: block;
+  font-size: 14px;
+  margin-bottom: var(--s-1);
+}
+
+.field input {
+  width: 100%;
+  height: 44px;
+  padding: 0 var(--s-3);
+  border-radius: var(--r-row);
+  border: 1px solid color-mix(in srgb, var(--ink) 16%, transparent);
+  background: var(--bg);
+  color: var(--ink);
+}
+
+.field input:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.auth-submit {
+  width: 100%;
+  margin-top: var(--s-4);
+}
+
+.auth-switch {
+  margin: var(--s-3) auto 0;
+  display: block;
+}
+
+.auth-divider {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  margin: var(--s-4) 0;
+  color: var(--ink-muted);
+  font-size: 12px;
+}
+
+.auth-divider::before,
+.auth-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: color-mix(in srgb, var(--ink) 12%, transparent);
+}
+
+.auth-message {
+  margin-top: var(--s-3);
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.auth-message--error {
+  color: var(--danger);
+}
+
+.auth-message:not(.auth-message--error) {
+  color: var(--ink);
+  background: var(--surface-2);
+  padding: var(--s-3);
+  border-radius: var(--r-row);
+}
+
+/* ============ Akun di sidebar ============ */
+
+.sidebar__auth {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-1);
+  padding: var(--s-2) var(--s-3);
+  border-top: 1px solid color-mix(in srgb, var(--ink) 8%, transparent);
+}
+
+.sidebar__auth-email {
+  font-size: 12px;
+  color: var(--ink-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sidebar__auth .btn--text {
+  align-self: flex-start;
+  padding-left: 0;
 }
