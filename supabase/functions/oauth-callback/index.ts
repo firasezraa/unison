@@ -26,7 +26,7 @@ Deno.serve(async (req) => {
   if (!code || !state) return redirect(`${appRedirect}?status=error`)
 
   const supabaseUrl = Deno.env.get('SUPABASE_URL')
-  const serviceRoleKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')
+  const serviceRoleKey = Deno.env.get('SERVICE_ROLE_KEY')
   const encryptionKey = Deno.env.get('TOKEN_ENCRYPTION_KEY')
   if (!supabaseUrl || !serviceRoleKey || !encryptionKey) {
     return redirect(`${appRedirect}?status=error&reason=not_configured`)

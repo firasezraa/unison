@@ -21,7 +21,7 @@ Deno.serve(async (req) => {
   if (req.method !== 'POST') return json({ error: 'Metode tidak didukung' }, 405)
 
   const supabaseUrl = Deno.env.get('SUPABASE_URL')
-  const serviceRoleKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')
+  const serviceRoleKey = Deno.env.get('SERVICE_ROLE_KEY')
   if (!supabaseUrl || !serviceRoleKey) {
     return json({ error: 'Edge Function belum dikonfigurasi' }, 503)
   }
