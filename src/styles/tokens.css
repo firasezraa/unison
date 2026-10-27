@@ -1,0 +1,104 @@
+:root {
+  /* Permukaan & tinta — terang */
+  --bg: #f1f2f6;
+  --surface-1: #e7e9f0;
+  --surface-2: #daddE8;
+  --ink: #1b1838;
+  --ink-muted: #5b5978;
+  --accent: #f2b63c;
+  --on-accent: #1b1838;
+  --focus: #4a43b8;
+  --danger: #b42318;
+  --danger-soft: #fbe9e7;
+  --scrim: rgba(21, 18, 43, 0.6);
+
+  /* Benang layanan — terang */
+  --t-sp: #15803d;
+  --t-am: #d1163a;
+  --t-td: #08707f;
+  --t-yt: #c41208;
+  --t-sc: #b54708;
+
+  /* Radius */
+  --r-badge: 4px;
+  --r-row: 6px;
+  --r-dialog: 14px;
+  --r-art: 4px;
+
+  /* Jarak */
+  --s-1: 4px;
+  --s-2: 8px;
+  --s-3: 12px;
+  --s-4: 16px;
+  --s-6: 24px;
+  --s-8: 32px;
+  --s-12: 48px;
+  --s-16: 64px;
+
+  /* Gerak */
+  --m-press: 90ms;
+  --m-open: 180ms;
+  --m-sheet: 260ms;
+  --m-blend: 240ms;
+  --m-loop: 1200ms;
+
+  /* Tinggi komponen */
+  --h-row: 56px;
+  --h-player: 88px;
+  --h-mini: 64px;
+  --h-tab: 56px;
+
+  --font-ui: 'Poppins', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --bg: #15122b;
+    --surface-1: #1d1940;
+    --surface-2: #2a2552;
+    --ink: #efedfa;
+    --ink-muted: #a7a3c9;
+    --focus: #f2b63c;
+    --danger: #ff7b6b;
+    --danger-soft: #3a1e2a;
+
+    --t-sp: #1ed760;
+    --t-am: #ff4d63;
+    --t-td: #3ddceb;
+    --t-yt: #ff3b2e;
+    --t-sc: #ff7a1a;
+
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme='dark'] {
+  --bg: #15122b;
+  --surface-1: #1d1940;
+  --surface-2: #2a2552;
+  --ink: #efedfa;
+  --ink-muted: #a7a3c9;
+  --focus: #f2b63c;
+  --danger: #ff7b6b;
+  --danger-soft: #3a1e2a;
+
+  --t-sp: #1ed760;
+  --t-am: #ff4d63;
+  --t-td: #3ddceb;
+  --t-yt: #ff3b2e;
+  --t-sc: #ff7a1a;
+
+  color-scheme: dark;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
