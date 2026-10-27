@@ -7,6 +7,7 @@ export type Route =
   | { name: 'playlist'; id: string }
   | { name: 'koneksi' }
   | { name: 'pengaturan' }
+  | { name: 'masuk' }
 
 function parse(hash: string): Route {
   const clean = hash.replace(/^#\/?/, '')
@@ -24,6 +25,8 @@ function parse(hash: string): Route {
       return { name: 'koneksi' }
     case 'pengaturan':
       return { name: 'pengaturan' }
+    case 'masuk':
+      return { name: 'masuk' }
     default:
       return { name: 'beranda' }
   }
@@ -43,6 +46,8 @@ export function routeToHash(route: Route): string {
       return '#/koneksi'
     case 'pengaturan':
       return '#/pengaturan'
+    case 'masuk':
+      return '#/masuk'
   }
 }
 

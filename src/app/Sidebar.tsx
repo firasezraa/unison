@@ -1,6 +1,7 @@
 import type { Route } from './useHashRoute'
 import { routeToHash } from './useHashRoute'
 import { useUnison } from './UnisonContext'
+import { useAuth } from '../auth/AuthContext'
 import {
   HomeIcon,
   LibraryIcon,
@@ -19,6 +20,7 @@ const NAV = [
 
 export function Sidebar({ route }: { route: Route }) {
   const { playlists } = useUnison()
+  const { user, signOut } = useAuth()
 
   return (
     <nav className="sidebar" aria-label="Navigasi utama">
@@ -70,6 +72,21 @@ export function Sidebar({ route }: { route: Route }) {
         <SettingsIcon className="nav__icon" />
         <span>Pengaturan</span>
       </a>
+
+      {user ? (
+        <div className="sidebar__auth">
+          <span className="sidebar__auth-email" title={user.email ?? ''}>
+            {user.email}
+          </span>
+          <button type="button" className="btn btn--text" onClick={() => void signOut()}>
+            Keluar
+          </button>
+        </div>
+      ) : (
+        <a className="nav__link" href={routeToHash({ name: 'masuk' })} title="Masuk">
+          <span>Masuk</span>
+        </a>
+      )}
 
       <p className="sidebar__note">Prototipe. Pemutaran disimulasikan, tanpa audio nyata.</p>
     </nav>
