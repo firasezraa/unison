@@ -55,7 +55,43 @@ npm run lint     # oxlint
 - **Provider adapter:** data layanan dan lagu ada di `src/data/`, di belakang tipe `Provider`, `Track`, dan `ProviderId` di `src/domain/types.ts`. Mengganti mock dengan SDK nyata berarti mengisi `check()`/`beginTrack()` di `src/app/UnisonContext.tsx` dengan adapter sungguhan.
 - **Aksesibilitas:** landmark dan heading per layar, `role="slider"` dengan `aria-valuetext` untuk progres, `aria-live="polite"` untuk perubahan lagu dan status handoff, fokus terlihat, target sentuh ≥ 44px, `dir="auto"` pada judul/artis, dukungan `prefers-reduced-motion` dan `forced-colors`, serta kode huruf layanan di samping warna.
 
+## Integrasi OAuth, token, dan provider (fase arsitektur)
+
+Backend Unison live di project Supabase **`unison`** (ref `cliujpbiecvbskxiyxny`, region `ap-southeast-1`, paket Free, $0/bulan).
+
+### Apa yang sudah terpasang & terverifikasi
+
+- **Skema + RLS** (`supabase/migrations/0001_init.sql`): `private.provider_accounts` (token), `private.oauth_states` (state PKCE), dan tabel publik `playlists`, `playlist_items`, `play_history`, `sync_jobs`. Semua `public` memakai RLS policy owner `auth.uid()`.
+- **Fungsi pembungkus service-role-only** (`0002_private_access_functions.sql`): `unison_oauth_insert_state`, `unison_oauth_consume_state`, `unison_provider_upsert`, `unison_provider_status`, `unison_provider_disconnect`. Terverifikasi `anon_exec=false, auth_exec=false, svc_exec=true` — hanya service_role yang bisa memanggil.
+- **Token terenkripsi AES-256-GCM** (`supabase/functions/_shared/crypto.ts`): kunci `TOKEN_ENCRYPTION_KEY` hanya di secret Edge Function; ciphertext di `private.provider_accounts.token_ciphertext`, tidak pernah ke klien.
+- **Empat Edge Function** (ter-deploy, terverifikasi lewat HTTP): `oauth-authorize` (401 tanpa JWT), `oauth-callback` (302 redirect), `provider-status` (401 tanpa JWT), `apple-developer-token` (401 tanpa JWT; 503 jujur bila kunci Apple belum diisi).
+
+### Alur OAuth 2.1 PKCE
+
+```
+Klien → POST /functions/v1/oauth-authorize {provider}   (dengan JWT user)
+      → server buat state + code_verifier, simpan ke private.oauth_states
+      → balas authorizationUrl → browser diarahkan ke provider
+Provider → redirect ke /functions/v1/oauth-callback?code&state
+      → server cocokkan state (sekali pakai, 10 menit), tukar code (client_secret + code_verifier)
+      → enkripsi token, simpan ke private.provider_accounts
+      → redirect ke aplikasi (#/koneksi?status=connected&provider=…)
+```
+
+`code_verifier` dan `client_secret` tidak pernah menyentuh klien; `state` mencegah CSRF.
+
+### Cara mengisi kredensial
+
+Salin `.env.example`, isi variabel `VITE_*` untuk frontend, lalu set secret Edge Function (Dashboard Supabase > Edge Functions > Secrets): `SUPABASE_SERVICE_ROLE_KEY`, `TOKEN_ENCRYPTION_KEY`, `OAUTH_REDIRECT_URI`, `APP_REDIRECT_URI`, dan `*_CLIENT_ID`/`*_CLIENT_SECRET` per provider. Lihat `.env.example` untuk daftar lengkap.
+
+### Status jujur
+
+Tanpa akun berbayar, **playback nyata Apple Music / Spotify tidak mungkin** (butuh Apple Developer Program $99/tahun + langganan; Spotify Premium untuk Dev Mode + pengguna). Fondasi arsitektur ini sudah jadi dan teruji; yang tersisa untuk Fase 0 adalah mengisi kredensial satu provider, memverifikasi endpoint TIDAL, dan memuat SDK (MusicKit JS / Web Playback SDK) di klien.
+
+> **Catatan import:** repo memakai `../_shared/*` (konvensi `supabase functions deploy` CLI), sedangkan deploy lewat MCP memakai `./_shared/*`. Isi modul identik; hanya jalur import yang berbeda.
+
 ## Dokumen
+
 
 - `docs/superpowers/specs/2026-10-27-unison-prototype-design.md` — desain prototipe ini
 - `docs/superpowers/plans/2026-10-27-unison-prototype.md` — rencana implementasi
