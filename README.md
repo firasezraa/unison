@@ -70,15 +70,6 @@ Bagian prototipe tetap bisa dicoba tanpa akun:
 
 ## Integrasi Supabase
 
-Backend Unison live di project **`unison`**:
-
-| | |
-|---|---|
-| Ref | `cliujpbiecvbskxiyxny` |
-| URL | `https://cliujpbiecvbskxiyxny.supabase.co` |
-| Region | `ap-southeast-1` (Singapura) |
-| Paket | Free ($0/bulan) |
-
 ### Alur OAuth 2.1 PKCE
 
 ```
@@ -142,7 +133,7 @@ Bila tidak dimatikan, daftar akun baru mengirim email konfirmasi (terkena batas 
 |---|---|---|
 | `SUPABASE_SERVICE_ROLE_KEY` | ✅ | Service role key project (hanya di sisi server) |
 | `TOKEN_ENCRYPTION_KEY` | ✅ | Kunci AES-256-GCM, 32 byte base64url |
-| `OAUTH_REDIRECT_URI` | ✅ | URL callback, mis. `https://cliujpbiecvbskxiyxny.supabase.co/functions/v1/oauth-callback` |
+| `OAUTH_REDIRECT_URI` | ✅ | URL callback |
 | `APP_REDIRECT_URI` | ✅ | Origin aplikasi + `/#/koneksi`, mis. `http://localhost:5173/#/koneksi` |
 | `SPOTIFY_CLIENT_ID` / `SPOTIFY_CLIENT_SECRET` | bila pakai Spotify | Dari Spotify Developer Dashboard |
 | `APPLE_MUSIC_CLIENT_ID` / `APPLE_MUSIC_CLIENT_SECRET` | bila pakai Apple | Dari Apple Developer |
